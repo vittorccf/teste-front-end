@@ -1,0 +1,51 @@
+@use "tokens" as *;
+@use "mixins" as *;
+
+// Figma: 6 abas de 214 x 40 com bordas sobrepostas (gap -1), 1280px no total.
+.tabs {
+  @include hide-scrollbar;
+  display: flex;
+  max-width: $container;
+  margin-inline: auto;
+  overflow-x: auto;
+}
+
+.tab {
+  @include reset-button;
+  flex: 1 0 auto;
+  min-width: 140px;
+  height: 40px;
+  padding-inline: 16px;
+  border: 1px solid $color-border;
+  background: $color-surface;
+  font-size: 16px;
+  font-weight: $weight-regular;
+  line-height: 16px;
+  text-transform: uppercase;
+  color: $color-text-tab;
+  white-space: nowrap;
+  transition: color $transition;
+
+  & + & {
+    margin-left: -1px;
+  }
+
+  &:hover {
+    color: $color-primary;
+  }
+
+  &:focus-visible {
+    position: relative;
+    outline: 2px solid $color-primary;
+    outline-offset: -3px;
+  }
+
+  &[aria-selected="true"] {
+    font-weight: $weight-bold;
+    color: $color-primary;
+  }
+
+  @include up(lg) {
+    flex: 0 0 $tab-width;
+  }
+}

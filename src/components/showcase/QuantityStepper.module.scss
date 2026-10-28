@@ -1,0 +1,47 @@
+@use "tokens" as *;
+@use "mixins" as *;
+
+// Figma: 110 x 36, borda #d9d9d9; menos em cinza, mais e número em azul-marinho.
+.stepper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 110px;
+  height: 36px;
+  padding-inline: 4px;
+  border: 1px solid $color-border-stepper;
+  border-radius: 4px;
+  background: $color-surface;
+}
+
+.button {
+  @include reset-button;
+  @include focus-ring;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  color: $color-navy;
+
+  &:first-child {
+    color: $color-text-muted;
+  }
+
+  &:hover:not(:disabled) {
+    color: $color-primary;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+}
+
+.value {
+  font-size: 16px;
+  font-weight: $weight-medium;
+  line-height: 16px;
+  color: $color-navy;
+  text-align: center;
+}

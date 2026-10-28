@@ -1,0 +1,123 @@
+@use "sass:map";
+@use "tokens" as *;
+
+$breakpoints: (
+  "sm": $bp-sm,
+  "md": $bp-md,
+  "lg": $bp-lg,
+  "xl": $bp-xl,
+);
+
+// Mobile first: @include up(md) { ... } vale de 768px para cima.
+@mixin up($name) {
+  @media (min-width: map.get($breakpoints, $name)) {
+    @content;
+  }
+}
+
+@mixin down($name) {
+  @media (max-width: map.get($breakpoints, $name) - 1px) {
+    @content;
+  }
+}
+
+@mixin container($width: $container) {
+  width: 100%;
+  max-width: $width + 2 * $gutter;
+  margin-inline: auto;
+  padding-inline: $gutter;
+}
+
+@mixin reset-button {
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+@mixin reset-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@mixin focus-ring($color: $color-primary) {
+  &:focus-visible {
+    outline: 2px solid $color;
+    outline-offset: 2px;
+  }
+}
+
+@mixin hide-scrollbar {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// Botão base: tamanho e cor ficam com quem usa.
+@mixin button($background, $color, $hover) {
+  @include reset-button;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: $background;
+  color: $color;
+  font-weight: $weight-bold;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: background-color $transition;
+  @include focus-ring($color-navy);
+
+  &:hover {
+    background: $hover;
+  }
+}
+
+@mixin button-primary {
+  @include button($color-primary, $color-surface, $color-primary-dark);
+  height: 44px;
+  border-radius: 4px;
+  font-size: 14px;
+  line-height: 21px;
+}
+
+@mixin button-yellow {
+  @include button($color-yellow, $color-navy, $color-yellow-dark);
+}
+
+@mixin line-clamp($lines) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Título de seção com traços dos lados (vitrines): 30px bold azul, traços de 360px.
+@mixin section-title {
+  font-size: 22px;
+  font-weight: $weight-bold;
+  line-height: 1.5;
+  color: $color-primary;
+  text-align: center;
+
+  @include up(md) {
+    font-size: 30px;
+  }
+}

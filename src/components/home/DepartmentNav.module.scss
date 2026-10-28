@@ -1,0 +1,86 @@
+@use "tokens" as *;
+@use "mixins" as *;
+
+// Figma: 7 quadrados de 128px, vão de 42px, 39px abaixo do banner.
+.nav {
+  @include container(1160px);
+  margin-top: 39px;
+}
+
+.list {
+  @include reset-list;
+  @include hide-scrollbar;
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  overflow-x: auto;
+  // Espaço para a sombra dos quadrados não ser cortada pelo overflow.
+  // A folga não entra no fluxo: margens negativas devolvem o espaço.
+  padding: 4px 8px 12px;
+  margin: -4px -8px -12px;
+}
+
+.item {
+  @include focus-ring;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  width: 96px;
+  border-radius: 10px;
+  color: $color-text-category;
+
+  &:hover .tile {
+    box-shadow: $shadow-tile-active;
+  }
+
+  &[aria-current="page"] {
+    .tile {
+      background: $color-surface;
+      box-shadow: $shadow-tile-active;
+    }
+
+    .label {
+      font-weight: $weight-semibold;
+      color: $color-accent;
+    }
+  }
+
+  @include up(md) {
+    width: 128px;
+  }
+}
+
+.tile {
+  display: grid;
+  place-items: center;
+  width: 96px;
+  height: 96px;
+  border-radius: 10px;
+  background: $color-tile;
+  box-shadow: $shadow-tile;
+  transition: box-shadow $transition;
+
+  img {
+    width: 46px;
+    height: 46px;
+  }
+
+  @include up(md) {
+    width: 128px;
+    height: 128px;
+
+    img {
+      width: 61px;
+      height: 61px;
+    }
+  }
+}
+
+.label {
+  font-size: 14px;
+  font-weight: $weight-medium;
+  line-height: 21px;
+  text-align: center;
+  white-space: nowrap;
+}

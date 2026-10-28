@@ -1,0 +1,218 @@
+@use "tokens" as *;
+@use "mixins" as *;
+
+.footer {
+  margin-top: $section-gap;
+}
+
+// Figma: faixa azul-marinho de 162px; título em Outfit, campos de 233 x 42, botão amarelo de 157.
+.newsletter {
+  background: $color-navy;
+  color: $color-surface;
+}
+
+.newsletterInner {
+  @include container;
+  display: grid;
+  gap: 24px;
+  padding-block: 40px;
+
+  @include up(lg) {
+    grid-template-columns: 515px auto;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 162px;
+    padding-block: 0;
+  }
+}
+
+.newsletterTitle {
+  font-family: $font-family-display;
+  font-size: 26px;
+  font-weight: $weight-semibold;
+  line-height: 38px;
+
+  @include up(md) {
+    font-size: 32px;
+  }
+}
+
+.newsletterText {
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: $weight-light;
+  line-height: 18px;
+}
+
+.newsletterForm {
+  display: grid;
+  gap: 8px;
+}
+
+.fields {
+  display: grid;
+  gap: 8px;
+
+  input {
+    height: 42px;
+    padding-inline: 24px;
+    border: 1px solid $color-border-input;
+    border-radius: 8px;
+    background: $color-surface;
+    color: $color-text;
+    font-size: 14px;
+    line-height: 18px;
+
+    &::placeholder {
+      color: $color-placeholder;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $color-yellow;
+    }
+  }
+
+  button {
+    @include button-yellow;
+    height: 42px;
+    padding-inline: 40px;
+    border-radius: 8px;
+    color: $color-black-button;
+    font-size: 14px;
+    font-weight: $weight-semibold;
+    @include focus-ring($color-surface);
+  }
+
+  @include up(md) {
+    grid-template-columns: 233px 233px 157px;
+  }
+}
+
+.terms {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: fit-content;
+  font-size: 14px;
+  line-height: 21px;
+  cursor: pointer;
+
+  input {
+    width: 15px;
+    height: 15px;
+    margin: 0;
+    accent-color: $color-yellow;
+  }
+}
+
+// Figma: rodapé cinza de 282px, coluna da marca de 354, divisória vertical, 3 colunas com vão de 100.
+.main {
+  background: $color-tile;
+}
+
+.mainInner {
+  @include container;
+  display: grid;
+  gap: 40px;
+  padding-block: 42px;
+
+  @include up(lg) {
+    grid-template-columns: 354px 1fr;
+    align-items: center;
+    gap: 0;
+    min-height: 282px;
+  }
+}
+
+.about {
+  p {
+    max-width: 354px;
+    margin-top: 18px;
+    font-size: 14px;
+    font-weight: $weight-light;
+    line-height: 21px;
+    color: $color-text;
+  }
+}
+
+.social {
+  @include reset-list;
+  display: flex;
+  gap: 26px;
+  margin-top: 27px;
+
+  a {
+    @include focus-ring;
+    display: block;
+    color: $color-social;
+    transition: color $transition;
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+}
+
+.columns {
+  display: grid;
+  gap: 32px;
+
+  @include up(sm) {
+    grid-template-columns: repeat(3, auto);
+    justify-content: start;
+  }
+
+  @include up(lg) {
+    gap: 100px;
+    align-self: stretch;
+    align-items: center;
+    margin-left: 89px;
+    padding-left: 90px;
+    border-left: 1px solid $color-divider-footer;
+  }
+}
+
+.column {
+  ul {
+    @include reset-list;
+    display: grid;
+    gap: 16px;
+    margin-top: 20px;
+    line-height: 16px;
+  }
+
+  a {
+    @include focus-ring;
+    display: block;
+    font-family: $font-family-alt;
+    font-size: 14px;
+    line-height: 16px;
+    color: $color-text-footer;
+    white-space: nowrap;
+    transition: color $transition;
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+}
+
+.columnTitle {
+  font-size: 16px;
+  font-weight: $weight-bold;
+  line-height: 16px;
+  color: $color-text-footer;
+}
+
+.copyright {
+  padding: 13px $gutter 14px;
+  font-size: 13px;
+  font-weight: $weight-light;
+  line-height: 20px;
+  text-align: center;
+  color: $color-text;
+
+  small {
+    font-size: inherit;
+  }
+}

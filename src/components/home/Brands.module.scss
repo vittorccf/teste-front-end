@@ -1,0 +1,51 @@
+@use "tokens" as *;
+@use "mixins" as *;
+
+// Figma: 5 círculos brancos de 211px com sombra, vão de 42, 32px abaixo do título.
+.brands {
+  @include container(1250px);
+  margin-top: $section-gap;
+}
+
+.title {
+  @include section-title;
+}
+
+.list {
+  @include reset-list;
+  @include hide-scrollbar;
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  overflow-x: auto;
+  // Folga para a sombra (0 7px 20px) não ser cortada pelo overflow; as margens devolvem o espaço
+  // (os círculos ficam 32px abaixo do título, como no Figma).
+  padding: 24px 8px 28px;
+  margin: 8px -8px -28px;
+
+  @include up(lg) {
+    justify-content: center;
+    gap: 42px;
+  }
+}
+
+.brand {
+  @include focus-ring;
+  display: grid;
+  place-items: center;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: $color-surface;
+  box-shadow: $shadow-brand;
+  transition: transform $transition;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  @include up(md) {
+    width: 211px;
+    height: 211px;
+  }
+}

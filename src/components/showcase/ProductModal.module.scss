@@ -1,0 +1,153 @@
+@use "tokens" as *;
+@use "mixins" as *;
+
+// Figma "Popup": caixa de 769 x 299, cantos de 6px, fundo da página escurecido (preto a 54%).
+.dialog {
+  width: min(769px, calc(100% - 2 * #{$gutter}));
+  max-height: calc(100dvh - 2 * #{$gutter});
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: $color-surface;
+  color: $color-text;
+  box-shadow: $shadow-modal;
+
+  &::backdrop {
+    background: $color-overlay;
+  }
+
+  &[open] {
+    animation: pop 0.2s ease-out;
+  }
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+}
+
+.box {
+  position: relative;
+  display: grid;
+  gap: 24px;
+  padding: 48px 24px 24px;
+
+  // Foto de 247 a 56px das bordas; textos começam 87px depois dela.
+  @include up(md) {
+    grid-template-columns: 247px 328px;
+    column-gap: 87px;
+    align-items: start;
+    min-height: 299px;
+    padding: 56px 49px 38px 56px;
+  }
+}
+
+.close {
+  @include reset-button;
+  @include focus-ring;
+  position: absolute;
+  top: 8px;
+  right: 16px;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  color: $color-close;
+
+  &:hover {
+    color: $color-primary;
+  }
+}
+
+.media {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 192px;
+
+  img {
+    width: auto;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+
+  @include up(md) {
+    padding-top: 7px;
+  }
+}
+
+.title {
+  font-size: 20px;
+  font-weight: $weight-regular;
+  line-height: 20px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.price {
+  margin-top: 18px;
+  font-size: 20px;
+  font-weight: $weight-semibold;
+  line-height: 20px;
+  letter-spacing: 1px;
+}
+
+.description {
+  max-width: 290px;
+  margin-top: 32px;
+  font-family: $font-family-alt;
+  font-size: 10px;
+  font-weight: $weight-medium;
+  line-height: 15px;
+  letter-spacing: 0.5px;
+  color: $color-text-muted;
+}
+
+.details {
+  @include focus-ring;
+  align-self: flex-start;
+  margin-top: 18px;
+  font-family: $font-family-alt;
+  font-size: 11px;
+  font-weight: $weight-semibold;
+  line-height: 11px;
+  letter-spacing: 0.55px;
+  color: $color-primary;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.buy {
+  @include button-yellow;
+  width: 188px;
+  height: 36px;
+  border-radius: 6px;
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.feedback {
+  min-height: 0;
+  margin-top: 8px;
+  font-size: 12px;
+  color: $color-primary;
+
+  &:empty {
+    margin-top: 0;
+  }
+}

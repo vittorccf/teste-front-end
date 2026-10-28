@@ -1,0 +1,79 @@
+@use "tokens" as *;
+@use "mixins" as *;
+
+// Figma: 4 cards de 304 com vão de 18 (1270px); setas de 32px a 15px dos cards.
+$track-width: 4 * $card-width + 3 * $card-gap;
+// Folga para a sombra do card (0 3px 19px) não ser cortada pelo overflow.
+$shadow-room: 24px;
+
+.carousel {
+  position: relative;
+  max-width: $track-width;
+  margin-inline: auto;
+}
+
+.track {
+  @include reset-list;
+  @include hide-scrollbar;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: $card-width;
+  gap: $card-gap;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  // No celular a folga lateral é só a margem da página, para não criar rolagem horizontal.
+  scroll-padding-inline: $gutter;
+  padding: $shadow-room $gutter;
+  margin: -$shadow-room (-$gutter);
+
+  @include up(lg) {
+    scroll-padding-inline: $shadow-room;
+    padding-inline: $shadow-room;
+    margin-inline: -$shadow-room;
+    // Mostra a sombra lateral dos cards das pontas, mas esconde o card seguinte (que começa a 18px).
+    clip-path: inset(0 7px);
+  }
+}
+
+.slide {
+  scroll-snap-align: start;
+}
+
+.arrow {
+  @include reset-button;
+  @include focus-ring;
+  position: absolute;
+  top: 246px;
+  z-index: 2;
+  display: none;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: $color-surface;
+  box-shadow: $shadow-arrow;
+  color: $color-text;
+  transition: opacity $transition, color $transition;
+
+  &:hover:not(:disabled) {
+    color: $color-primary;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+
+  @include up(lg) {
+    display: grid;
+  }
+}
+
+.prev {
+  left: -47px;
+}
+
+.next {
+  right: -46px;
+}

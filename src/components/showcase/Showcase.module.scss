@@ -1,0 +1,63 @@
+@use "tokens" as *;
+@use "mixins" as *;
+
+.showcase {
+  @include container;
+  margin-top: $section-gap;
+}
+
+// Figma: título de 350px entre traços de 360px, 34px de respiro.
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 34px;
+  max-width: 1138px;
+  margin-inline: auto;
+
+  &::before,
+  &::after {
+    content: "";
+    flex: 0 1 360px;
+    height: 1px;
+    background: $color-line;
+  }
+}
+
+.title {
+  @include section-title;
+  white-space: nowrap;
+}
+
+.seeAllRow {
+  margin-top: 4px;
+  line-height: 23px;
+  text-align: center;
+}
+
+.seeAll {
+  @include focus-ring;
+  font-size: 15px;
+  font-weight: $weight-bold;
+  line-height: 23px;
+  color: $color-text;
+
+  &:hover {
+    color: $color-primary;
+    text-decoration: underline;
+  }
+}
+
+.tabsRow {
+  margin-top: 4px;
+}
+
+.panel {
+  margin-top: 24px;
+}
+
+.empty {
+  padding: 64px 0;
+  text-align: center;
+  color: $color-text-category;
+}

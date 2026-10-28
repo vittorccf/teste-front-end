@@ -1,0 +1,109 @@
+@use "tokens" as *;
+@use "mixins" as *;
+
+// Figma: card 304 x 500; foto 278 x 228 a 32px do topo; textos e botão a 12px da esquerda, botão de 276.
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: $card-width;
+  height: $card-height;
+  padding: 32px 16px 16px 12px;
+  background: $color-surface;
+  border-radius: $card-radius;
+  box-shadow: $shadow-card;
+  transition: transform $transition, box-shadow $transition;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  &:has(.open:focus-visible) {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+}
+
+// A foto do JSON tem 15px transparentes em cima e embaixo; no Figma o aparelho ocupa mais da área de 228px.
+.media {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 228px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.image {
+  width: auto;
+  max-width: none;
+  height: 246px;
+  object-fit: contain;
+}
+
+.name {
+  margin-top: 9px;
+  font-size: 15px;
+  font-weight: $weight-light;
+  line-height: 23px;
+  color: $color-text;
+}
+
+.open {
+  @include reset-button;
+  @include line-clamp(2);
+  height: 46px;
+  text-align: left;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: $card-radius;
+  }
+
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+.prices {
+  margin-top: 12px;
+}
+
+.listPrice {
+  font-size: 16px;
+  line-height: 24px;
+  color: $color-text-strike;
+}
+
+.price {
+  margin-top: 2px;
+  font-size: 20px;
+  font-weight: $weight-bold;
+  line-height: 30px;
+  color: $color-text;
+}
+
+.installments {
+  margin-top: 2px;
+  font-size: 12px;
+  line-height: 18px;
+  color: $color-text;
+}
+
+.shipping {
+  margin-top: 7px;
+  font-size: 12px;
+  line-height: 18px;
+  color: $color-primary;
+}
+
+.buy {
+  @include button-primary;
+  // Acima do ::after do botão esticado, para o hover do botão funcionar.
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  margin-top: 12px;
+}

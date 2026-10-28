@@ -1,31 +1,89 @@
-# Teste Econverse: Vaga Desenvolvedor Front-End
+# Econverse: vitrine de produtos
 
-### Vem ser #Econverse!
+Teste para a vaga de **Desenvolvedor Front-End** da Econverse. Página de loja em **React + TypeScript** com a vitrine
+"Produtos relacionados" consumindo o [JSON de produtos](https://app.econverse.com.br/teste-front-end/junior/tecnologia/lista-produtos/produtos.json)
+e um **modal com as informações do produto** ao clicar nele.
 
-Segue abaixo as instruções para a execução do teste.
+> Decisões e prós/contras: [`docs/DECISOES.md`](docs/DECISOES.md) ·
+> Medidas, cores e fontes lidas do Figma: [`docs/LAYOUT.md`](docs/LAYOUT.md)
 
-## Instruções
-- Faça um fork desse projeto para a sua conta pessoal do GitHub.
-- Desenvolva a página conforme as **Especificações Técnicas** 
-- Crie um README com as instruções para compilar, testar e rodar o projeto.
-- O link do repositório deverá ser enviado para o e-mail gustavo.cipriano@econverse.com.br com o título **Teste Vaga FrontEnd**
+| Topo e vitrine (1440 px) | Modal do produto |
+| --- | --- |
+| ![Topo e vitrine](docs/screenshots/topo-e-vitrine.png) | ![Modal](docs/screenshots/modal.png) |
 
-## Especificações Técnicas
-- Desenvolver a pagina em React e TypeScript conforme o [layout](https://www.figma.com/file/rWnzPeoxgynuNPsJjV0VmV/Teste-Front-End-Jr?node-id=0%3A1). Para conseguir pegar os elementos do Figma, basta copiar o layout para sua conta que terá acesso de edição.
-- Montar a [vitrine](https://app.econverse.com.br/teste-front-end/junior/tecnologia/layout/vitrine-produtos.png) de produtos consumindo as informações dos produtos em json atraves desse [Link](https://app.econverse.com.br/teste-front-end/junior/tecnologia/lista-produtos/produtos.json).
-- Desenvolver a interação ao clicar em um produto conforme layout. A interação consiste em abrir um modal com as principais informações do produto presente no arquivo [JSON](https://app.econverse.com.br/teste-front-end/junior/tecnologia/lista-produtos/produtos.json) conforme o produto que clicar.
-- Utilizar Pré-processador Sass, Less ou Stylus.
-- Respeitar o Layout pixel a pixel, tamanho das fontes, cores e botões.
-- Não Utilizar bibliotecas UI como Bootstrap, Foundation, ou afins.
+Página inteira: [`docs/screenshots/pagina-inteira.png`](docs/screenshots/pagina-inteira.png) · celular: [`docs/screenshots/mobile.png`](docs/screenshots/mobile.png)
 
-## Pontos Extras
-- Utilizar Boas práticas de SEO
-- Uso de HTML semântico
+## O que tem
 
-## O que avaliaremos em seu teste
-- Organização do projeto
-- Lógica do código
-- Componentização
-- Alcance dos objetivos propostos
+| Requisito do teste | Onde está |
+| --- | --- |
+| React e TypeScript conforme o layout | Next.js 16 (App Router), React 19, TypeScript `strict` + `noUncheckedIndexedAccess` |
+| Vitrine consumindo o JSON pelo link | `src/lib/products.ts`: busca no servidor, valida com zod, cache de 1 h (ISR) |
+| Modal com as informações do produto clicado | `src/components/showcase/ProductModal.tsx`: `<dialog>` nativo (foto, nome, preço, descrição, quantidade, comprar), como o frame "Popup" do Figma |
+| Pré-processador Sass | SCSS Modules por componente + tokens e mixins em `src/styles/` |
+| Layout pixel a pixel: fontes, cores, botões | Valores lidos do Figma pela API (frames "Home" e "Popup"), assets originais exportados de lá; cada bloco fica a até 2px da posição do Figma em 1440 px, e o e2e confere tamanho e posição dos cards |
+| Sem bibliotecas de UI | Nenhuma: ícones em SVG (os do Figma), carrossel com `scroll-snap`, modal com `<dialog>` |
+| Extra: SEO | HTML já vem com os produtos (renderizado no servidor), `<title>`/description/canonical/Open Graph, JSON-LD `ItemList` de `Product` com preço, `robots.txt`, `sitemap.xml`, `lang="pt-BR"`, imagens otimizadas (`next/image`) e fonte sem layout shift (`next/font`) |
+| Extra: HTML semântico | `header`/`nav`/`main`/`section`/`article`/`footer`, um único `h1`, hierarquia de títulos, `form role="search"`, `<s>` no preço antigo |
+| Também | Acessibilidade (abas WAI-ARIA com setas/Home/End, foco preso e Esc no modal, link "pular para o conteúdo", `prefers-reduced-motion`), responsivo do celular ao desktop, estado de erro se a API cair |
 
-**Boa sorte! ;)**
+## Como rodar
+
+Pré-requisito: **Node.js 22 ou superior** (testado com 24).
+
+```bash
+npm install
+npm run dev          # http://localhost:3000
+```
+
+Build de produção:
+
+```bash
+npm run build
+npm start            # http://localhost:3000
+```
+
+Opcional: `NEXT_PUBLIC_SITE_URL=https://seu-dominio` para canonical, Open Graph e sitemap apontarem para o domínio real.
+
+## Testes
+
+```bash
+npm run lint && npm run typecheck
+npm test             # unitários (Vitest + Testing Library): preço, parcelas, parsing do JSON, categorias, SEO,
+                     # vitrine (cards, abrir/fechar modal, quantidade, abas pelo teclado, API fora do ar)
+npm run build && npm run test:e2e
+                     # ponta a ponta (Playwright) contra o build de produção, em 1440 px e em celular:
+                     # HTML com produtos e JSON-LD, modal (clique, Esc, clique fora, foco devolvido),
+                     # tamanho do card igual ao layout, seta do carrossel, sem rolagem horizontal no celular
+```
+
+Sem acesso para baixar o navegador do Playwright, use um Chrome já instalado:
+`PW_CHROMIUM_PATH="C:/Program Files/Google/Chrome/Application/chrome.exe" npm run test:e2e`.
+
+## Estrutura
+
+```
+src/
+  app/                    layout (fontes, metadados), página, robots, sitemap, 404
+  components/
+    showcase/             vitrine: Showcase (estado), CategoryTabs, Carousel, ProductCard, ProductModal, QuantityStepper
+    layout/               Header e Footer
+    home/                 HeroBanner, DepartmentNav, Partners, Brands
+    brand/, icons/        logo (SVG do Figma) e ícones (figma-icons.tsx gerado dos SVGs do Figma)
+  lib/                    regras puras: products (busca + validação), price, categories, seo
+  styles/                 _tokens.scss (cores, fontes, medidas) e _mixins.scss (breakpoints, botão, foco)
+tests/unit, tests/e2e     Vitest e Playwright · tests/fixtures/produtos.json é cópia do JSON real
+public/                   logo e imagens exportadas do Figma (banner, parceiros, ícones das categorias)
+docs/                     decisões, medidas do layout, renders do Figma, capturas
+```
+
+## Limitações conhecidas
+
+- **Figma × PNG:** o PNG da vitrine citado no enunciado (rosa) é da página "Antigo" do Figma. Implementei a página
+  **"Home"** (azul e amarelo), que é a versão atual do layout. Detalhes em [`docs/LAYOUT.md`](docs/LAYOUT.md).
+- **Preço "de":** o JSON não traz esse valor. O preço riscado é calculado (10% acima, terminando em ,90) numa função
+  só (`listPriceInCents`), para trocar quando a API tiver o campo.
+- **Categorias:** o JSON também não tem categoria; ela sai do nome do produto. Como todos são iPhones, as abas
+  Acessórios, Tablets, Notebooks e TVs mostram "nenhum produto".
+- Busca, links do menu, newsletter e carrinho são visuais (fora do escopo do teste). O "Comprar" do modal confirma a
+  quantidade escolhida na tela.

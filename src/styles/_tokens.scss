@@ -1,0 +1,70 @@
+// Tokens do layout Econverse, lidos do Figma (frame "Home", 1440 px) pela API. Ver docs/LAYOUT.md.
+
+// Cores
+$color-primary: #3442b5; // títulos, aba ativa, botão Comprar do card, frete
+$color-primary-dark: #28348f;
+$color-accent: #3019b2; // destaques do topo, "Ofertas do dia", categoria ativa
+$color-yellow: #f7ca11; // CTAs: banner, parceiros, newsletter, Comprar do modal
+$color-yellow-dark: #e0b500;
+$color-navy: #271c47; // texto sobre amarelo, faixa da newsletter, logo
+$color-text: #3f3f40;
+$color-text-tab: #3b3b3b;
+$color-text-category: #4e4e4e;
+$color-text-footer: rgba(34, 34, 34, 0.71);
+$color-text-muted: #9f9f9f;
+$color-text-strike: #808080;
+$color-placeholder: #676767;
+$color-close: #707070;
+$color-social: #4a4a4a;
+$color-border: #bdbdbd;
+$color-border-input: #e7e7e7;
+$color-border-stepper: #d9d9d9;
+$color-line: #dedede;
+$color-line-header: #f0f0f0;
+$color-divider-footer: rgba(40, 40, 40, 0.18);
+$color-surface: #ffffff;
+$color-search: #f6f5f2;
+$color-tile: #f4f4f4; // categorias e rodapé
+$color-checkbox: #f6f6f6;
+$color-checkbox-border: #8c342b;
+$color-black-button: #161615;
+$color-overlay: rgba(0, 0, 0, 0.54);
+
+// Tipografia
+$font-family: var(--font-poppins), "Poppins", system-ui, sans-serif;
+$font-family-alt: var(--font-work-sans), "Work Sans", system-ui, sans-serif;
+$font-family-display: var(--font-outfit), "Outfit", system-ui, sans-serif;
+$weight-light: 300;
+$weight-regular: 400;
+$weight-medium: 500;
+$weight-semibold: 600;
+$weight-bold: 700;
+
+// Grade
+$container: 1280px;
+$gutter: 16px;
+$section-gap: 90px; // respiro entre blocos da home
+
+// Sombras
+$shadow-nav: 0 8px 16px rgba(57, 48, 19, 0.12);
+$shadow-card: 0 3px 19px rgba(0, 0, 0, 0.22);
+$shadow-tile: 0 4px 11px rgba(0, 0, 0, 0.13);
+$shadow-tile-active: 0 2px 9px rgba(0, 0, 0, 0.22);
+$shadow-brand: 0 7px 20px rgba(0, 0, 0, 0.13);
+$shadow-arrow: 0 4px 4px rgba(0, 0, 0, 0.25);
+$shadow-modal: 0 8px 32px rgba(0, 0, 0, 0.25);
+
+// Vitrine
+$card-width: 304px;
+$card-height: 500px;
+$card-gap: 18px;
+$card-radius: 10px;
+$tab-width: 214px;
+
+// Pontos de quebra
+$bp-sm: 576px;
+$bp-md: 768px;
+$bp-lg: 1024px;
+$bp-xl: 1440px;
+
+$transition: 0.2s ease;
